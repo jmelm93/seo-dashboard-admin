@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import DynamicForm, { FormConfig } from '../components/forms/DynamicForm';
 import dashboardTypes from '../@configs/form-item-options/dashboardTypes.json';
 import newCustomerConfig from '../@configs/forms/newCustomer.json';
+import newDashboardConfig from '../@configs/forms/newDashboard.json';
+import newDataModel from '../@configs/forms/newDataModel.json';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { setDocInCollection } from '../lib/firebase/firestore'
@@ -20,7 +22,6 @@ type Configuration = {
     dataModel: any;
 }
 
-
 const getConfiguration = (documentType: DocumentType): Configuration => {
     switch(documentType) {
         case 'customers':
@@ -32,14 +33,14 @@ const getConfiguration = (documentType: DocumentType): Configuration => {
         case 'dashboards':
             return {
                 title: 'Dashboard',
-                config: newCustomerConfig as FormConfig,
-                dataModel: dashboardTypes
+                config: newDashboardConfig as FormConfig,
+                dataModel: null
             };
         case 'data-models':
             return {
                 title: 'Data Model',
-                config: newCustomerConfig as FormConfig,
-                dataModel: dashboardTypes
+                config: newDataModel as FormConfig,
+                dataModel: null
             };
         default:
             throw new Error('Unsupported document type');
