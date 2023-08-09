@@ -58,10 +58,18 @@ export type DashboardViewConfig = {
     labels: Labels;
 };
 
+export type InitialFilterPanelState = {
+    colType: string;
+    id: number;
+    value: string;
+    columnField: string;
+    operatorValue: string;
+};
+
 export type DashboardTab = {
     title: string;
     iconifyIconId: string;
-    initialFilterPanelState: any[];
+    initialFilterPanelState: InitialFilterPanelState[] | null;
     availableFilterFields: string[];
     tabIndex: number;
     maxAndMinDates: {
