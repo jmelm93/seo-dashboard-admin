@@ -12,12 +12,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
 import { FIRESTORE_OPTIONS } from './config';
-
+import { DocumentType } from '../@types';
 
 type DataObject = { [key: string]: any };
 
 
-const getColDefs = (data: DataObject[], navigate: any): GridColDef[] => {
+const getColDefs = (data: DataObject[], docType: DocumentType, navigate: any): GridColDef[] => {
     if (!data || data.length === 0) return [];
 
     const sampleObject = data[0];  // take the first item to get the keys
@@ -37,7 +37,7 @@ const getColDefs = (data: DataObject[], navigate: any): GridColDef[] => {
             <Button 
                 variant="outlined" 
                 color="primary" 
-                onClick={() => navigate(`/`)}
+                onClick={() => navigate(`/${docType}/edit/${params.id}`)}
                 sx={{ width: 125, '&:hover': { boxShadow: 'none' } }}
             >
                 Edit
@@ -53,11 +53,11 @@ const getColDefs = (data: DataObject[], navigate: any): GridColDef[] => {
 };
 
 const DocumentList = () => {
-    const [selectedCollection, setSelectedCollection] = useState(FIRESTORE_OPTIONS[0].value);
+    const [selectedCollection, setSelectedCollection] = useState<DocumentType>(FIRESTORE_OPTIONS[0].value);
     const { firestoreData } = useFirestoreQuery({ collectionId: selectedCollection });
     const navigate = useNavigate();
 
-    const columns: GridColDef[] = getColDefs(firestoreData, navigate);
+    const columns: GridColDef[] = getColDefs(firestoreData, selectedCollection, navigate);
 
     // remove "s" from the end of the selected collection
     const cleanSelectedCollection = selectedCollection.slice(0, -1);

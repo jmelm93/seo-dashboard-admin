@@ -31,6 +31,7 @@ const FormikMultiAutocomplete = ({ field, formik, dataModel }: Props) => {
                             newValues.map(value => value.name)
                         );
                     }}
+                    value={(Array.isArray(formik.values[field.name]) ? formik.values[field.name] : []).map((value: string) => options.find(option => option.name === value))}
                     renderInput={(params) => 
                         <TextField 
                             {...params} 

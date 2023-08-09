@@ -26,6 +26,7 @@ const FormikAutocomplete = ({ field, formik, dataModel }: Props) => {
                     options={options}
                     getOptionLabel={(option) => option.label}
                     onChange={(_, newValue) => formik.setFieldValue(field.name, newValue?.name || '')}
+                    value={(Array.isArray(formik.values[field.name]) ? formik.values[field.name] : []).map((value: string) => options.find(option => option.name === value))}
                     renderInput={(params) => 
                         <TextField 
                             {...params} 

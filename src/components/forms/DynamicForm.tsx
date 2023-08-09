@@ -41,12 +41,15 @@ export type DataModelItem = {
 
 type DynamicFormProps = {
     config: FormConfig;
-    dataModel?: DataModelItem[];  // This will be the contents of gaDataModel.json
     onSubmit: (values: Record<string, string>) => void;
+    dataModel?: DataModelItem[];  
+    // below items are only passed if "Edit" mode
+    initialValues?: Record<string, string> | undefined; 
+    isEditMode?: boolean | undefined; 
 }
 
 
-const DynamicForm = ({ config, dataModel, onSubmit }: DynamicFormProps): JSX.Element => {
+const DynamicForm = ({ config, dataModel, onSubmit, initialValues, isEditMode }: DynamicFormProps): JSX.Element => {
 
     const validationSchema = generateValidationSchema(config, dataModel);
 
@@ -58,16 +61,15 @@ const DynamicForm = ({ config, dataModel, onSubmit }: DynamicFormProps): JSX.Ele
     })
 
     const formik = useFormik({
-        initialValues: config.fields.reduce(
-            (acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {}
-        ),
+        initialValues: initialValues || // Use provided initial values, or fallback to default
+            config.fields.reduce((acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }), {}),
         validationSchema: Yup.object().shape(validationSchema),
         onSubmit,
     });
 
     // console.log('Yup - validation schema:', validationSchema); // Logging the validation schema from Yup:
-    // console.log('formik: ', formik); // Logging the entire formik object:
-    // console.log('formik.values: ', formik.values); // Values: The current values of all the fields in the form.
+    console.log('formik: ', formik); // Logging the entire formik object:
+    console.log('formik.values: ', formik.values); // Values: The current values of all the fields in the form.
     // console.log('formik.errors: ', formik.errors); // Errors: The current validation errors for each field.
     // console.log('formik.touched: ', formik.touched); // Touched: Tracks which fields have been touched/visited.
     // console.log('formik.isSubmitting: ', formik.isSubmitting);  // isSubmitting: A boolean indicating if the form is currently being submitted.

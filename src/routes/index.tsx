@@ -31,7 +31,7 @@ export default function Router() {
           path: 'customers',
           children: [
             { path: 'new', element: <ChangeDocument docType={'customers'} templateId={'new'} /> },
-            { path: 'edit', element: <ChangeDocument docType={'customers'} templateId={'edit'} /> }
+            { path: 'edit/:id', element: <ChangeDocument docType={'customers'} templateId={'edit'} /> }
           ]
         },
         // data models
@@ -39,7 +39,7 @@ export default function Router() {
           path: 'data-models',
           children: [
             { path: 'new', element: <ChangeDocument docType={'data-models'} templateId={'new'}  /> },
-            { path: 'edit', element: <ChangeDocument docType={'data-models'} templateId={'edit'}  /> }
+            { path: 'edit/:id', element: <ChangeDocument docType={'data-models'} templateId={'edit'}  /> }
           ]
         },
         // dashboard configs
@@ -47,7 +47,7 @@ export default function Router() {
           path: 'dashboards',
           children: [
             { path: 'new', element: <ChangeDocument docType={'dashboards'} templateId={'new'}  /> },
-            { path: 'edit', element: <ChangeDocument docType={'dashboards'} templateId={'edit'}  /> }
+            { path: 'edit/:id', element: <ChangeDocument docType={'dashboards'} templateId={'edit'}  /> }
           ]
         }
       ],

@@ -1,4 +1,11 @@
-export const FIRESTORE_OPTIONS = [
+import { DocumentType } from '../@types';
+
+type DocumentTypeOptions = {
+    value: DocumentType;
+    label: string;
+}[];
+
+export const FIRESTORE_OPTIONS: DocumentTypeOptions = [
     {
         value: 'customers',
         label: 'Customers',
