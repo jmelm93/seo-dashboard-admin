@@ -9,6 +9,7 @@ import {
     FormikAutocomplete,
     FormikTextField,
     FormikMultiAutocomplete,
+    FormikSchemaItems
 } from './inputs';
 
 type ValidationConfig = {
@@ -18,11 +19,18 @@ type ValidationConfig = {
     metric?: string;
 }
 
+type FieldTypes = 'TextField' 
+    | 'Autocomplete' 
+    | 'MultiAutocomplete' 
+    | 'DatePicker' 
+    | 'SchemaItems'
+    | 'hidden';
+
 export type FieldConfig = {
     name: string;
     label: string;
     dataType: 'string' | 'number' | 'date' | 'array';
-    fieldType: 'TextField' | 'Autocomplete' | 'MultiAutocomplete' | 'DatePicker' | 'hidden';
+    fieldType: FieldTypes;
     validation?: ValidationConfig;
     source?: string;  // This will be the filename (without .json) containing the options for Autocomplete fields
     defaultValue?: string;
@@ -68,11 +76,12 @@ const DynamicForm = ({ config, dataModel, onSubmit, initialValues, isEditMode }:
     });
 
     // console.log('Yup - validation schema:', validationSchema); // Logging the validation schema from Yup:
-    console.log('formik: ', formik); // Logging the entire formik object:
-    console.log('formik.values: ', formik.values); // Values: The current values of all the fields in the form.
+    // console.log('formik: ', formik); // Logging the entire formik object:
+    // console.log('formik.values: ', formik.values); // Values: The current values of all the fields in the form.
     // console.log('formik.errors: ', formik.errors); // Errors: The current validation errors for each field.
     // console.log('formik.touched: ', formik.touched); // Touched: Tracks which fields have been touched/visited.
     // console.log('formik.isSubmitting: ', formik.isSubmitting);  // isSubmitting: A boolean indicating if the form is currently being submitted.
+    
 
     return (
         <Card sx={{ p: 4 }}>
@@ -91,6 +100,8 @@ const DynamicForm = ({ config, dataModel, onSubmit, initialValues, isEditMode }:
                                 return <FormikAutocomplete field={field} formik={formik} dataModel={finalDataModel} key={field.name} />;
                             case 'DatePicker':
                                 return <FormikDatePicker field={field} formik={formik} key={field.name} />;
+                            case 'SchemaItems':
+                                return <FormikSchemaItems field={field} formik={formik} key={field.name} />;
                             default:
                                 return null;
                         }
